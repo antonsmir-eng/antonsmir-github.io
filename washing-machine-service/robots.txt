@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+Sitemap: https://antonsmir-eng.github.io/antonsmir-github.io/washing-machine-service/sitemap.xml
