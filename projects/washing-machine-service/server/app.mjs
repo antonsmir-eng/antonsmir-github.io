@@ -4,7 +4,8 @@ import {randomUUID,timingSafeEqual,createHash} from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {normalizePhone} from '../public/assets/logic.mjs';
-import {brands,districts} from '../src/data.mjs';
+import {districts} from '../src/data.mjs';
+import {applianceById} from '../src/catalog.mjs';
 const MIME={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.xml':'application/xml','.yml':'application/xml','.txt':'text/plain; charset=utf-8'};
 const STATUS=['new','qualified','confirmed','paid','cancelled'];
 const TIME=['09:00–12:00','12:00–15:00','15:00–18:00','18:00–21:00'];
@@ -22,6 +23,8 @@ export async function createApp({dbPath='data/service.sqlite',adminToken,allowed
  CREATE INDEX IF NOT EXISTS phone_created ON leads(phone,created);
  CREATE TABLE IF NOT EXISTS cases(id TEXT PRIMARY KEY,title TEXT NOT NULL,model TEXT NOT NULL,price REAL NOT NULL,date TEXT NOT NULL,body TEXT NOT NULL);
  `);
+ // Preserve existing bookings when upgrading an installed database.
+ for(const table of ['leads','slots'])if(!db.prepare('PRAGMA table_info('+table+')').all().some(c=>c.name==='appliance'))db.exec("ALTER TABLE "+table+" ADD COLUMN appliance TEXT NOT NULL DEFAULT 'washer'");
  const rate=new Map(),root=path.resolve(staticRoot),secretHash=createHash('sha256').update(adminToken).digest();
  const authorized=req=>{const presented=req.headers.authorization?.replace(/^Bearer /,'')||'';return timingSafeEqual(createHash('sha256').update(presented).digest(),secretHash);};
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
@@ -39,22 +42,22 @@ export async function createApp({dbPath='data/service.sqlite',adminToken,allowed
  if(p.startsWith('/api/admin/')&&!authorized(req))return json(res,401,{error:'Неверный ключ доступа.'});
  if(p==='/api/health'&&req.method==='GET')return json(res,200,{ok:true,bookingEnabled});
  if(p==='/api/slots'&&req.method==='GET'){
- const date=u.searchParams.get('date'),district=u.searchParams.get('district');if(!validDate(date||'')||!districts.includes(district))return json(res,400,{error:'Проверьте дату и округ.'});
- const slots=db.prepare("SELECT id,date,time FROM slots WHERE active=1 AND date=? AND district=? AND id NOT IN (SELECT slotId FROM leads WHERE slotId IS NOT NULL AND status<>'cancelled') ORDER BY time").all(date,district);return json(res,200,{slots});}
+ const date=u.searchParams.get('date'),district=u.searchParams.get('district'),appliance=u.searchParams.get('appliance')||'washer';if(!applianceById(appliance)||!validDate(date||'')||!districts.includes(district))return json(res,400,{error:'Проверьте дату и округ.'});
+ const slots=db.prepare("SELECT id,date,time FROM slots WHERE active=1 AND date=? AND district=? AND appliance=? AND id NOT IN (SELECT slotId FROM leads WHERE slotId IS NOT NULL AND status<>'cancelled') ORDER BY time").all(date,district,appliance);return json(res,200,{slots});}
  if(p==='/api/leads'&&req.method==='POST'){
  if(!bookingEnabled)return json(res,503,{error:'Приём заявок пока закрыт.'});
- const b=await body(req),phone=normalizePhone(b.phone),name=text(b.name,80),problem=text(b.problem),date=text(b.preferredDate,10),slotId=text(b.slotId,80)||null;
+ const b=await body(req),appliance=b.appliance??'washer',device=applianceById(appliance),phone=normalizePhone(b.phone),name=text(b.name,80),problem=text(b.problem),date=text(b.preferredDate,10),slotId=text(b.slotId,80)||null;
  if(b.website)return json(res,400,{error:'Обращение не принято.'});
- if(!phone||name.length<2||problem.length<10||b.consent!==true||!brands.includes(b.brand)||!districts.includes(b.district)||!validDate(date)||!/^[\w-]{16,80}$/.test(b.requestId||'')||!attachmentValid(b.attachment))return json(res,400,{error:'Проверьте контактные данные, дату, согласие и формат фотографии.'});
+ if(!phone||name.length<2||problem.length<10||b.consent!==true||!device||!device.brands.includes(b.brand)||!districts.includes(b.district)||!validDate(date)||!/^[\w-]{16,80}$/.test(b.requestId||'')||!attachmentValid(b.attachment))return json(res,400,{error:'Проверьте контактные данные, дату, согласие и формат фотографии.'});
  const existing=db.prepare('SELECT id FROM leads WHERE requestId=?').get(b.requestId);if(existing)return json(res,200,{id:existing.id,duplicate:true});
  // Deduplication response does not expose an existing lead ID to someone knowing a phone number.
  const repeated=db.prepare("SELECT id FROM leads WHERE phone=? AND created>? AND status<>'cancelled'").get(phone,new Date(Date.now()-86400000).toISOString());if(repeated)return json(res,409,{error:'По этому телефону уже есть обращение за последние сутки. Дождитесь связи с диспетчером.'});
- if(slotId){const slot=db.prepare('SELECT * FROM slots WHERE id=? AND active=1').get(slotId);if(!slot||slot.date!==date||slot.district!==b.district)return json(res,409,{error:'Этот интервал больше недоступен. Обновите расписание.'});}
+ if(slotId){const slot=db.prepare('SELECT * FROM slots WHERE id=? AND active=1').get(slotId);if(!slot||slot.date!==date||slot.district!==b.district||slot.appliance!==appliance)return json(res,409,{error:'Этот интервал больше недоступен. Обновите расписание.'});}
  const id='TR-'+randomUUID().slice(0,8).toUpperCase(),source={};for(const k of ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'])if(b.source?.[k])source[k]=text(b.source[k],150);
- try{db.prepare('INSERT INTO leads(id,requestId,created,name,phone,district,brand,model,problem,preferredDate,slotId,source,attachment,consentVersion) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)').run(id,b.requestId,new Date().toISOString(),name,phone,b.district,b.brand,text(b.model,80),problem,date,slotId,JSON.stringify(source),b.attachment||null,'2026-09-28');}catch(err){if(String(err.message).includes('UNIQUE'))return json(res,409,{error:'Интервал уже выбран другим клиентом. Обновите расписание.'});throw err;}
+ try{db.prepare('INSERT INTO leads(id,requestId,created,name,phone,district,brand,model,problem,preferredDate,slotId,source,attachment,consentVersion,appliance) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').run(id,b.requestId,new Date().toISOString(),name,phone,b.district,b.brand,text(b.model,80),problem,date,slotId,JSON.stringify(source),b.attachment||null,'2026-09-28',appliance);}catch(err){if(String(err.message).includes('UNIQUE'))return json(res,409,{error:'Интервал уже выбран другим клиентом. Обновите расписание.'});throw err;}
  return json(res,201,{id,duplicate:false});}
  if(p==='/api/cases'&&req.method==='GET')return json(res,200,{cases:db.prepare('SELECT * FROM cases ORDER BY date DESC LIMIT 100').all()});
- if(p==='/api/admin/leads'&&req.method==='GET'){const leads=db.prepare('SELECT l.id,l.created,l.name,l.phone,l.district,l.brand,l.model,l.problem,l.preferredDate,l.status,l.paidAmount,l.source,l.slotId,s.time AS slotTime,CASE WHEN l.attachment IS NULL THEN 0 ELSE 1 END AS hasAttachment FROM leads l LEFT JOIN slots s ON s.id=l.slotId ORDER BY l.created DESC LIMIT 500').all().map(x=>({...x,source:JSON.parse(x.source)}));return json(res,200,{leads});}
+ if(p==='/api/admin/leads'&&req.method==='GET'){const leads=db.prepare('SELECT l.appliance,l.id,l.created,l.name,l.phone,l.district,l.brand,l.model,l.problem,l.preferredDate,l.status,l.paidAmount,l.source,l.slotId,s.time AS slotTime,CASE WHEN l.attachment IS NULL THEN 0 ELSE 1 END AS hasAttachment FROM leads l LEFT JOIN slots s ON s.id=l.slotId ORDER BY l.created DESC LIMIT 500').all().map(x=>({...x,source:JSON.parse(x.source)}));return json(res,200,{leads});}
  if(/^\/api\/admin\/leads\/[^/]+\/attachment$/.test(p)&&req.method==='GET'){const row=db.prepare('SELECT attachment FROM leads WHERE id=?').get(p.split('/')[4]);return row?.attachment?json(res,200,row):json(res,404,{error:'Вложение не найдено.'});}
  if(/^\/api\/admin\/leads\/[^/]+$/.test(p)&&req.method==='PATCH'){
  const b=await body(req),id=p.split('/')[4];if(!STATUS.includes(b.status)||!Number.isFinite(b.paidAmount)||b.paidAmount<0||b.paidAmount>1000000||b.status==='paid'&&b.paidAmount<=0)return json(res,400,{error:'Проверьте статус и сумму оплаты.'});
@@ -63,8 +66,8 @@ export async function createApp({dbPath='data/service.sqlite',adminToken,allowed
  try{db.prepare('UPDATE leads SET status=?,paidAmount=? WHERE id=?').run(b.status,b.paidAmount,id);}catch(err){if(String(err.message).includes('UNIQUE'))return json(res,409,{error:'Интервал уже занят другим обращением.'});throw err;}return json(res,200,{ok:true});}
  if(p==='/api/admin/slots'&&req.method==='GET')return json(res,200,{slots:db.prepare("SELECT s.*,EXISTS(SELECT 1 FROM leads l WHERE l.slotId=s.id AND l.status<>'cancelled') AS booked FROM slots s WHERE active=1 ORDER BY date,time LIMIT 500").all()});
  if(p==='/api/admin/slots'&&req.method==='POST'){
- const b=await body(req);if(!validDate(b.date||'')||!districts.includes(b.district)||!TIME.includes(b.time)||text(b.master,80).length<2)return json(res,400,{error:'Проверьте дату, округ, мастера и интервал.'});
- const id=randomUUID();try{db.prepare('INSERT INTO slots(id,master,district,date,time) VALUES(?,?,?,?,?)').run(id,text(b.master,80),b.district,b.date,b.time);}catch{return json(res,409,{error:'У мастера уже есть интервал на это время.'});}return json(res,201,{id});}
+ const b=await body(req),appliance=b.appliance??'washer';if(!applianceById(appliance)||!validDate(b.date||'')||!districts.includes(b.district)||!TIME.includes(b.time)||text(b.master,80).length<2)return json(res,400,{error:'Проверьте дату, округ, мастера и интервал.'});
+ const id=randomUUID();try{db.prepare('INSERT INTO slots(id,master,district,date,time,appliance) VALUES(?,?,?,?,?,?)').run(id,text(b.master,80),b.district,b.date,b.time,appliance);}catch{return json(res,409,{error:'У мастера уже есть интервал на это время.'});}return json(res,201,{id});}
  if(/^\/api\/admin\/slots\/[^/]+$/.test(p)&&req.method==='DELETE'){const id=p.split('/')[4];if(db.prepare("SELECT id FROM leads WHERE slotId=? AND status<>'cancelled'").get(id))return json(res,409,{error:'Сначала отмените или перенесите обращение в этом интервале.'});db.prepare('UPDATE slots SET active=0 WHERE id=?').run(id);return json(res,200,{ok:true});}
  if(p==='/api/admin/cases'&&req.method==='POST'){
  const b=await body(req);if(text(b.title,120).length<5||text(b.model,80).length<2||text(b.body).length<30||!Number.isFinite(b.price)||b.price<0||b.price>1000000||!/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')||b.date>today()||b.publishConsent!==true)return json(res,400,{error:'Проверьте сведения о ремонте и согласие на публикацию.'});
