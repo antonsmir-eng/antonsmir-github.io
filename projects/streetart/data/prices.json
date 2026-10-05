@@ -1,0 +1,1084 @@
+{
+  "version": "2026.10.04-3",
+  "effectiveDate": "2026-10-04",
+  "currency": "RUB",
+  "vatRate": 0.22,
+  "retail_markup": 1.0,
+  "retail_threshold": null,
+  "retail_threshold_unit": null,
+  "minimumArea": null,
+  "deliveryRates": null,
+  "regionalCoefficients": null,
+  "urgencyCoefficients": {
+    "standard": 1,
+    "urgent": null,
+    "overnight": null
+  },
+  "volumeDiscounts": null,
+  "installationVisit": null,
+  "validityDays": null,
+  "priceApproval": false,
+  "wide": [
+    {
+      "id": "banner-330",
+      "name": "Баннер ламинированный 330 г/м²",
+      "unit": "м²",
+      "price": 189,
+      "count": 3116,
+      "area": 57468,
+      "p25": 159,
+      "p75": 214,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "banner-440",
+      "name": "Баннер ламинированный 440 г/м²",
+      "unit": "м²",
+      "price": 161,
+      "count": 1776,
+      "area": 21634,
+      "p25": 160,
+      "p75": 210,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "film-economy",
+      "name": "Самоклеящаяся плёнка (эконом)",
+      "unit": "м²",
+      "price": 231,
+      "count": 1079,
+      "area": 20008,
+      "p25": 208,
+      "p75": 258,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "cast-400",
+      "name": "Баннер литой 400 г/м²",
+      "unit": "м²",
+      "price": 242,
+      "count": 666,
+      "area": 18024,
+      "p25": 217,
+      "p75": 287,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "scroller",
+      "name": "Скроллерная бумага",
+      "unit": "м²",
+      "price": 344,
+      "count": 951,
+      "area": 10272,
+      "p25": 295,
+      "p75": 361,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "orajet",
+      "name": "Самоклеящаяся плёнка Orajet",
+      "unit": "м²",
+      "price": 235,
+      "count": 285,
+      "area": 6470,
+      "p25": 231,
+      "p75": 235,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "cast-510",
+      "name": "Баннер литой 510 г/м²",
+      "unit": "м²",
+      "price": 256,
+      "count": 176,
+      "area": 4961,
+      "p25": 210,
+      "p75": 347,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "cast-450",
+      "name": "Баннер литой 450 г/м²",
+      "unit": "м²",
+      "price": 247,
+      "count": 80,
+      "area": 3398,
+      "p25": 219,
+      "p75": 274,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "prism",
+      "name": "Пластик для призматронов",
+      "unit": "м²",
+      "price": 285,
+      "count": 68,
+      "area": 1985,
+      "p25": 285,
+      "p75": 331,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "poster",
+      "name": "Постерная бумага",
+      "unit": "м²",
+      "price": 130,
+      "count": 422,
+      "area": 1648,
+      "p25": 125,
+      "p75": 185,
+      "verify": false,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "blueback",
+      "name": "Бумага Blueback",
+      "unit": "м²",
+      "price": 232,
+      "count": 18,
+      "area": 123,
+      "p25": 50,
+      "p75": 328,
+      "verify": true,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    },
+    {
+      "id": "translucent",
+      "name": "Баннер транслюцентный",
+      "unit": "м²",
+      "price": 190,
+      "count": 23,
+      "area": 68,
+      "p25": 181,
+      "p75": 235,
+      "verify": true,
+      "source": "Учёт сделок, август–сентябрь 2026",
+      "lifeMonths": null,
+      "placement": null
+    }
+  ],
+  "interior": [
+    {
+      "id": "frontlit-510",
+      "name": "Литой баннер Frontlit 510, 720 dpi",
+      "unit": "м²",
+      "price": 350,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "blackout-one",
+      "name": "Blackout 510, односторонняя печать",
+      "unit": "м²",
+      "price": 400,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "blackout-two",
+      "name": "Blackout 510, двусторонняя печать",
+      "unit": "м²",
+      "price": 354,
+      "verify": true,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "mesh",
+      "name": "Баннерная сетка 720 dpi",
+      "unit": "м²",
+      "price": 368,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "translucent-interior",
+      "name": "Транслюцентный баннер, интерьерный прайс",
+      "unit": "м²",
+      "price": 1986,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "g1",
+      "name": "Огнестойкий баннер Г1 510, 1440 dpi",
+      "unit": "м²",
+      "price": 370,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "orajet-720",
+      "name": "Orajet 3640, 720 dpi",
+      "unit": "м²",
+      "price": 197,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "orajet-1440",
+      "name": "Orajet 3640, 1440 dpi",
+      "unit": "м²",
+      "price": 233,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "perforated",
+      "name": "Перфорированная плёнка",
+      "unit": "м²",
+      "price": 242,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "citylight",
+      "name": "Ситилайт / фотобумага 1440 dpi",
+      "unit": "м²",
+      "price": 221,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "backlit",
+      "name": "Backlit 1440 dpi",
+      "unit": "м²",
+      "price": 443,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "uv",
+      "name": "UV-печать без материала",
+      "unit": "м²",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "uv-white",
+      "name": "UV-печать с белилами без материала",
+      "unit": "м²",
+      "price": 600,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "lamination",
+      "name": "Ламинация холодная 80 мкм",
+      "unit": "м²",
+      "price": 450,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "floor-lamination",
+      "name": "Напольная ламинация 200 мкм",
+      "unit": "м²",
+      "price": 1036,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "cut",
+      "name": "Плоттерная резка без выборки",
+      "unit": "м²",
+      "price": 111,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "cut-weeding",
+      "name": "Резка с выборкой и монтажной плёнкой",
+      "unit": "м²",
+      "price": 389,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "application",
+      "name": "Накатка плёнки на ПВХ, ПЭТ, акрил",
+      "unit": "м²",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "pvc-3",
+      "name": "ПВХ вспененный белый 3 мм",
+      "unit": "м²",
+      "price": 345,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "pvc-5",
+      "name": "ПВХ вспененный белый 5 мм",
+      "unit": "м²",
+      "price": 553,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "pvc-8",
+      "name": "ПВХ вспененный белый 8 мм",
+      "unit": "м²",
+      "price": 766,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "composite",
+      "name": "Композитная панель 3 мм",
+      "unit": "м²",
+      "price": 1997,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "acrylic-clear",
+      "name": "Акрил прозрачный 3 мм",
+      "unit": "м²",
+      "price": 885,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "acrylic-milk",
+      "name": "Акрил молочный 3 мм",
+      "unit": "м²",
+      "price": 1195,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "magnetic",
+      "name": "Магнитный винил с клеевым слоем",
+      "unit": "м²",
+      "price": 700,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "fabric",
+      "name": "Тканевая вставка в лайтбокс, UV, силиконовый кант",
+      "unit": "м²",
+      "price": 1000,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "rollup",
+      "name": "Roll-up 850×2000",
+      "unit": "шт.",
+      "price": 21478,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "x-stand",
+      "name": "X-стенд 800×1800",
+      "unit": "шт.",
+      "price": 664,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "pavement",
+      "name": "Штендер двусторонний с карманами",
+      "unit": "шт.",
+      "price": 7586,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "glue",
+      "name": "Проклейка периметра / карманов",
+      "unit": "м.п.",
+      "price": 57,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "eyelet",
+      "name": "Люверсы с установкой",
+      "unit": "шт.",
+      "price": 15,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "mount-banner",
+      "name": "Монтаж баннера / сетки",
+      "unit": "м²",
+      "price": 550,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "remove-banner",
+      "name": "Демонтаж баннера / сетки",
+      "unit": "м²",
+      "price": 400,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "mount-film",
+      "name": "Монтаж самоклеящейся плёнки",
+      "unit": "м²",
+      "price": 600,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "remove-film",
+      "name": "Демонтаж самоклеящейся плёнки",
+      "unit": "м²",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "mount-pvc",
+      "name": "Монтаж ПВХ",
+      "unit": "м²",
+      "price": 1000,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "remove-pvc",
+      "name": "Демонтаж ПВХ",
+      "unit": "м²",
+      "price": 900,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "mount-sign",
+      "name": "Монтаж рекламной конструкции",
+      "unit": "м²",
+      "price": 800,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "remove-sign",
+      "name": "Демонтаж рекламной конструкции",
+      "unit": "м²",
+      "price": 700,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "vehicle",
+      "name": "Оклейка автотранспорта",
+      "unit": "м²",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "height-work",
+      "name": "Работы на высоте, альпинист",
+      "unit": "м²",
+      "price": 370,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "measure-tele",
+      "name": "Замер поверхности",
+      "unit": "выезд",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "supplies-basic",
+      "name": "Расходники: простой монтаж",
+      "unit": "комплект",
+      "price": 500,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "supplies-medium",
+      "name": "Расходники: средний монтаж",
+      "unit": "комплект",
+      "price": 1200,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "supplies-complex",
+      "name": "Расходники: сложный монтаж",
+      "unit": "комплект",
+      "price": 2000,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "lift",
+      "name": "Автовышка до 10 м, 2 часа",
+      "unit": "шт.",
+      "price": 2969,
+      "verify": false,
+      "source": "Tele2, Екатеринбург, сентябрь 2026"
+    },
+    {
+      "id": "sign-unlit",
+      "name": "Основная вывеска без подсветки",
+      "unit": "м²",
+      "price": 8132,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "sign-lit",
+      "name": "Основная вывеска с внутренней подсветкой",
+      "unit": "м²",
+      "price": 7967,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "sign-letters",
+      "name": "Вывеска на подложке с объёмными буквами",
+      "unit": "м²",
+      "price": 8064,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "sign-interior",
+      "name": "Интерьерная вывеска",
+      "unit": "м²",
+      "price": 12637,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "letters",
+      "name": "Объёмные буквы с внутренней подсветкой",
+      "unit": "см высоты",
+      "price": 97,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "letter-face",
+      "name": "Лицевая часть объёмного элемента",
+      "unit": "см высоты",
+      "price": 82,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "flat-element",
+      "name": "Плоский фигурный элемент 5 мм",
+      "unit": "см высоты",
+      "price": 48,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "bracket-small",
+      "name": "Панель-кронштейн световая: нижняя граница",
+      "unit": "м²",
+      "price": 19380,
+      "verify": true,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "bracket-large",
+      "name": "Панель-кронштейн световая: верхняя граница",
+      "unit": "м²",
+      "price": 32051,
+      "verify": true,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "pvc-printed",
+      "name": "Планшет ПВХ 3–4 мм с полноцветной печатью",
+      "unit": "м²",
+      "price": 5459,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "film-app",
+      "name": "Наклейка из цветной плёнки до 4 цветов",
+      "unit": "м²",
+      "price": 4567,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "nameplate",
+      "name": "Табличка на кабинет с ФИО",
+      "unit": "шт.",
+      "price": 1308,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "vip-plate",
+      "name": "VIP-табличка",
+      "unit": "шт.",
+      "price": 9615,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "opening",
+      "name": "Режим работы с карманом А4, двусторонний",
+      "unit": "шт.",
+      "price": 915,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "info-stand",
+      "name": "Стенд информации до 4 карманов",
+      "unit": "шт.",
+      "price": 5814,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "window-light",
+      "name": "Комплект подсветки витража",
+      "unit": "м.п.",
+      "price": 3077,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "measure-city",
+      "name": "Замер в черте города",
+      "unit": "услуга",
+      "price": 1972,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "measure-out",
+      "name": "Замер за городом",
+      "unit": "услуга",
+      "price": 4930,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "approval",
+      "name": "Согласование конструкции в администрации",
+      "unit": "услуга",
+      "price": 18128,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "project",
+      "name": "Рабочий проект рекламного места",
+      "unit": "услуга",
+      "price": 56352,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "facade",
+      "name": "Колористический паспорт фасада",
+      "unit": "услуга",
+      "price": 133242,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "storage",
+      "name": "Хранение",
+      "unit": "день",
+      "price": 962,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "recycle-sign",
+      "name": "Утилизация основной вывески",
+      "unit": "шт.",
+      "price": 6133,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "recycle-interior",
+      "name": "Утилизация интерьерной вывески",
+      "unit": "шт.",
+      "price": 9077,
+      "verify": false,
+      "source": "МегаФон Ритейл, сентябрь 2026"
+    },
+    {
+      "id": "edge-cut",
+      "name": "Резка в край",
+      "unit": "м.п.",
+      "price": 18.73,
+      "verify": false,
+      "source": "ТЗ v2 §7.5"
+    }
+  ],
+  "polygraphyMatrix": null,
+  "excludedAnomalies": [
+    {
+      "name": "Акрил 4 мм",
+      "price": 7817,
+      "unit": "м²",
+      "verify": true,
+      "enabled": false
+    }
+  ],
+  "featureFlags": {
+    "heroVariant": "a",
+    "miniCalculatorVariant": "a",
+    "exitIntent": true
+  },
+  "requirements": {
+    "formats": [
+      "CDR",
+      "pdf",
+      "tif",
+      "tiff",
+      "jpg",
+      "jpeg",
+      "png",
+      "eps",
+      "ai",
+      "psd",
+      "svg"
+    ],
+    "minimumDpi": null,
+    "bleedMm": null,
+    "colorProfile": null
+  },
+  "notes": [
+    "Цены B2B; публичный запуск только после утверждения владельцем.",
+    "Полиграфические медианные чеки не являются тарифами и не включены в публичный конфиг.",
+    "Для Blackout двусторонней печати и панель-кронштейнов требуется подтверждение цены."
+  ],
+  "outdoorFormats": [
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "banner-330",
+      "price": 3395.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "banner-440",
+      "price": 3401.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "cast-400",
+      "price": 4086.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "cast-510",
+      "price": 4600.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "film-economy",
+      "price": 4124.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "orajet",
+      "price": 4230.0
+    },
+    {
+      "format": "6x3",
+      "width": 6.0,
+      "height": 3.0,
+      "material": "prism",
+      "price": 5130.0
+    },
+    {
+      "format": "3.7x2.7",
+      "width": 3.7,
+      "height": 2.7,
+      "material": "scroller",
+      "price": 3637.0
+    },
+    {
+      "format": "3.7x2.7",
+      "width": 3.7,
+      "height": 2.7,
+      "material": "film-economy",
+      "price": 2572.0
+    },
+    {
+      "format": "3.7x2.7",
+      "width": 3.7,
+      "height": 2.7,
+      "material": "banner-330",
+      "price": 1884.0
+    },
+    {
+      "format": "1.2x1.8",
+      "width": 1.2,
+      "height": 1.8,
+      "material": "banner-440",
+      "price": 348.0
+    },
+    {
+      "format": "1.2x1.8",
+      "width": 1.2,
+      "height": 1.8,
+      "material": "banner-330",
+      "price": 391.0
+    },
+    {
+      "format": "1.2x1.8",
+      "width": 1.2,
+      "height": 1.8,
+      "material": "scroller",
+      "price": 641.0
+    },
+    {
+      "format": "1.2x1.8",
+      "width": 1.2,
+      "height": 1.8,
+      "material": "poster",
+      "price": 281.0
+    },
+    {
+      "format": "1.4x3",
+      "width": 1.4,
+      "height": 3.0,
+      "material": "banner-330",
+      "price": 758.0
+    },
+    {
+      "format": "1.4x3",
+      "width": 1.4,
+      "height": 3.0,
+      "material": "poster",
+      "price": 612.0
+    },
+    {
+      "format": "5x1",
+      "width": 5.0,
+      "height": 1.0,
+      "material": "cast-400",
+      "price": 2147.0
+    }
+  ],
+  "polygraphyTiers": [
+    {
+      "product": "Листовки А5",
+      "min": 1,
+      "max": 1000,
+      "observations": 2,
+      "price": 16.6,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А5",
+      "min": 1001,
+      "max": 5000,
+      "observations": 8,
+      "price": 4.46,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А5",
+      "min": 5001,
+      "max": 20000,
+      "observations": 18,
+      "price": 3.29,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А5",
+      "min": 20001,
+      "max": 99999,
+      "observations": 23,
+      "price": 1.01,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А5",
+      "min": 100000,
+      "max": 10000000,
+      "observations": 19,
+      "price": 0.82,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А6",
+      "min": 1,
+      "max": 1000,
+      "observations": 2,
+      "price": 12.78,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А6",
+      "min": 1001,
+      "max": 5000,
+      "observations": 7,
+      "price": 4.78,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А6",
+      "min": 5001,
+      "max": 20000,
+      "observations": 8,
+      "price": 2.02,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А6",
+      "min": 100000,
+      "max": 10000000,
+      "observations": 4,
+      "price": 0.48,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Листовки А4",
+      "min": 1,
+      "max": 1000,
+      "observations": 5,
+      "price": 16.55,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Купоны",
+      "min": 1001,
+      "max": 5000,
+      "observations": 10,
+      "price": 5.29,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Купоны",
+      "min": 5001,
+      "max": 20000,
+      "observations": 8,
+      "price": 0.97,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Купоны",
+      "min": 20001,
+      "max": 99999,
+      "observations": 8,
+      "price": 1.27,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Купоны",
+      "min": 100000,
+      "max": 10000000,
+      "observations": 6,
+      "price": 0.67,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Стикеры",
+      "min": 1,
+      "max": 1000,
+      "observations": 11,
+      "price": 62.52,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Стикеры",
+      "min": 1001,
+      "max": 5000,
+      "observations": 10,
+      "price": 27.02,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Стикеры",
+      "min": 5001,
+      "max": 20000,
+      "observations": 5,
+      "price": 33.95,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Визитки",
+      "min": 1,
+      "max": 1000,
+      "observations": 6,
+      "price": 14.5,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Буклеты",
+      "min": 1001,
+      "max": 5000,
+      "observations": 4,
+      "price": 6.93,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    },
+    {
+      "product": "Плакаты",
+      "min": 5001,
+      "max": 20000,
+      "observations": 4,
+      "price": 16.91,
+      "source": "ТЗ v2 §7.4; май–август 2026"
+    }
+  ],
+  "minimumOrderTotal": 15000,
+  "minimumOrderBasis": "withVAT"
+}

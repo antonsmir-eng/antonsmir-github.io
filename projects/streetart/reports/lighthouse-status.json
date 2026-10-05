@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-04",
+  "measured": false,
+  "target": 90,
+  "scores": null,
+  "coreWebVitals": null,
+  "reason": "Lighthouse CLI недоступен в среде; численные оценки не заявляются.",
+  "verification": "Ручная проверка интерфейса и адаптивности, TypeScript, проверки формул и экспортов. Подробности: QA.md."
+}

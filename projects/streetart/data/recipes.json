@@ -1,0 +1,88 @@
+{
+  "version": "2026.10.02-1",
+  "effectiveDate": "2026-10-02",
+  "recipes": [
+    {
+      "id": "pvc-film",
+      "name": "ПВХ с накаткой плёнки",
+      "pending": [
+        "Прозрачная плёнка",
+        "Фрезеровка по периметру"
+      ]
+    },
+    {
+      "id": "pvc-direct",
+      "name": "ПВХ с прямой UV-печатью",
+      "pending": [
+        "Фрезеровка по периметру"
+      ]
+    },
+    {
+      "id": "film",
+      "name": "Плёнка для витрины",
+      "pending": []
+    },
+    {
+      "id": "sticker",
+      "name": "Контурный стикер",
+      "pending": [
+        "Прозрачная плёнка"
+      ]
+    },
+    {
+      "id": "banner",
+      "name": "Баннер с обработкой",
+      "pending": []
+    },
+    {
+      "id": "fabric",
+      "name": "Ткань в лайтбокс",
+      "pending": []
+    },
+    {
+      "id": "pavement",
+      "name": "Штендер с двумя постерами",
+      "pending": []
+    },
+    {
+      "id": "sign",
+      "name": "Готовая вывеска",
+      "pending": []
+    },
+    {
+      "id": "letters",
+      "name": "Световые буквы",
+      "pending": []
+    },
+    {
+      "id": "rollup",
+      "name": "Мобильный стенд",
+      "pending": []
+    },
+    {
+      "id": "manual",
+      "name": "По индивидуальному ТЗ",
+      "pending": [
+        "Материалы и операции по рабочему проекту"
+      ]
+    }
+  ],
+  "packaging": {
+    "tapeMetersPerShipment": 2,
+    "rollBubbleAreaMultiplier": 0.6,
+    "sheetBubbleAreaMultiplier": 1,
+    "ratesApproved": false
+  },
+  "installation": {
+    "dayPercentage": 0.24,
+    "nightPercentage": 0.34,
+    "percentageApproved": false,
+    "addressesPerVisit": 3,
+    "largeSheetSideMeters": 2.5
+  },
+  "pvcThicknesses": [
+    3,
+    5,
+    8
+  ]
+}

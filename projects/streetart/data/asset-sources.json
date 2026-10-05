@@ -1,0 +1,86 @@
+{
+  "assets": [
+    {
+      "path": "public/assets/logo.svg",
+      "kind": "logo",
+      "dimensions": [
+        225,
+        65
+      ],
+      "source_page": "https://str-art.ru/",
+      "source_url": "https://static.tildacdn.com/tild3633-6537-4465-a464-313031616432/StreetArt.svg",
+      "description": "Official StreetArt handwritten company wordmark.",
+      "reuse": "Publicly served and used on official company website. No explicit reuse license or image ownership attribution located. Appropriate source material for proposed redesign, but no documented open-license permission.",
+      "client_logos": "No client-logo usage in selected material; Epson equipment brand visible in printer photo.",
+      "original_download_path": "/workspace/scratch/80eb8cd250d0/streetart-assets/streetart-logo.svg"
+    },
+    {
+      "path": "public/assets/color-proof.jpg",
+      "kind": "photo",
+      "dimensions": [
+        811,
+        465
+      ],
+      "source_page": "https://str-art.ru/",
+      "source_url": "https://static.tildacdn.com/tild3337-3630-4930-b765-306239323261/Frame_5.jpg",
+      "description": "Close-up of a person checking printed color swatches with a loupe. Official website uses this as service/process imagery; person is unidentified. Do not describe them as StreetArt staff.",
+      "reuse": "Publicly served and used on official company website. No explicit reuse license or image ownership attribution located. Appropriate source material for proposed redesign, but no documented open-license permission.",
+      "client_logos": "No client-logo usage in selected material; Epson equipment brand visible in printer photo.",
+      "original_download_path": "/workspace/scratch/80eb8cd250d0/streetart-assets/color-proof.jpg"
+    },
+    {
+      "path": "public/assets/printer.jpeg",
+      "kind": "photo",
+      "dimensions": [
+        800,
+        600
+      ],
+      "source_page": "https://str-art.ru/",
+      "source_url": "https://static.tildacdn.com/tild3062-3930-4537-a231-666236383133/solventnaya_pechat_2.jpeg",
+      "description": "Epson large-format printer producing feather artwork. Appears to be an exhibition/demo setting, not evidence of StreetArt production equipment or facility.",
+      "reuse": "Publicly served and used on official company website. No explicit reuse license or image ownership attribution located. Appropriate source material for proposed redesign, but no documented open-license permission.",
+      "client_logos": "No client-logo usage in selected material; Epson equipment brand visible in printer photo.",
+      "original_download_path": "/workspace/scratch/80eb8cd250d0/streetart-assets/wide-format-printer.jpeg"
+    },
+    {
+      "path": "public/assets/material-study.webp",
+      "kind": "generated concept illustration",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "createdAt": "2026-10-02",
+      "tool": "Built-in image generation",
+      "description": "Авторская студийная композиция из бумаги, акрила и рекламных материалов в палитре StreetArt. Не фотография клиентского проекта или собственного производства.",
+      "reuse": "Generated for this Site redesign. No customer logos or identifiable people.",
+      "sha256": "529a12aa150b69dfde5eea84a393bc3c192baef1d8a29aef1d47976549bd887b"
+    }
+  ],
+  "font": {
+    "Akrobat": "Not publicly linked in official homepage or its linked primary stylesheet. Official current stylesheet declares Manrope in 300/400/500/600/700 weights. No replacement font downloaded.",
+    "DejaVu Sans": {
+      "paths": [
+        "public/fonts/streetart-regular.woff",
+        "public/fonts/streetart-bold.woff"
+      ],
+      "source": "Locally available DejaVu Sans TrueType fonts, subset and converted to WOFF using fontTools. No external download.",
+      "license": "public/fonts/LICENSE-DejaVu.txt",
+      "rationale": "Neutral fallback explicitly permitted by the supplied brief when Akrobat is unavailable."
+    }
+  },
+  "excluded": "Excluded client-logo campaigns and product mockups, founder/team portrait, and process photo containing unidentified campaign branding. No company facility/team ownership claim should be made for selected process images.",
+  "derivatives": [
+    {
+      "path": "public/assets/color-proof.webp",
+      "source_path": "public/assets/color-proof.jpg",
+      "operation": "Local conversion to WebP; no generated or altered scene content.",
+      "sha256": "14b8176234072ac89466a27970c6dc3879d0d4a81c0ed233178bb582b5cda880"
+    },
+    {
+      "path": "public/assets/printer.webp",
+      "source_path": "public/assets/printer.jpeg",
+      "operation": "Local conversion to WebP; no generated or altered scene content.",
+      "sha256": "9ac8509c60782cdf5041ea080546019fa81eb2bc6539dac7b0d540c8a6870f2e"
+    }
+  ]
+}

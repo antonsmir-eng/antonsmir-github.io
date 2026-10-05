@@ -1,0 +1,51 @@
+{
+  "version": "2026.10.02-1",
+  "effectiveDate": "2026-10-02",
+  "claims": [
+    {
+      "id": "own-production",
+      "text": "Собственное производство",
+      "approved": false
+    },
+    {
+      "id": "around-clock",
+      "text": "Производство 24/7",
+      "approved": false
+    },
+    {
+      "id": "one-day",
+      "text": "Производство от 1 дня",
+      "approved": false
+    },
+    {
+      "id": "free-delivery",
+      "text": "Бесплатная доставка",
+      "approved": false
+    },
+    {
+      "id": "refund",
+      "text": "100% возврат при браке",
+      "approved": false
+    },
+    {
+      "id": "downtime",
+      "text": "Компенсация простоя рекламного места",
+      "approved": false
+    },
+    {
+      "id": "fifteen-minutes",
+      "text": "Подтверждение цены за 15 минут",
+      "approved": false
+    },
+    {
+      "id": "partner-count",
+      "text": "21 площадка в 16 городах",
+      "approved": false
+    },
+    {
+      "id": "repeat-clients",
+      "text": "93% клиентов становятся постоянными",
+      "approved": false
+    }
+  ]
+}

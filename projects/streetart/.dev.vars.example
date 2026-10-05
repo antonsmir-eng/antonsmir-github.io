@@ -1,0 +1,8 @@
+# Local preview only. Copy to .dev.vars and keep that file out of Git.
+# Generate a salted hash with lib/cabinet-crypto.ts; never put the password here.
+ADMIN_BOOTSTRAP_HASH=""
+PAYMENT_MODE="disabled"
+YOOKASSA_SHOP_ID=""
+YOOKASSA_SECRET_KEY=""
+# Leave empty in preview. In production, use the exact HTTPS website origin.
+CABINET_ORIGIN=""
