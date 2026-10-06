@@ -7,9 +7,11 @@ import ts from 'typescript';
 const root=process.cwd(),out=path.join(root,'.sites-runtime/cabinet-tests');await fs.mkdir(out,{recursive:true});
 for(const name of ['cabinet-model','cabinet-crypto','cabinet-server']){
  const source=await fs.readFile(path.join(root,'lib',name+'.ts'),'utf8');
- const code=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace(/from '(\.\/cabinet-[^']+)'/g,"from '$1.mjs'");
+ const code=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace("from '../data/blog'","from './blog.mjs'").replace(/from '(\.\/cabinet-[^']+)'/g,"from '$1.mjs'");
  await fs.writeFile(path.join(out,name+'.mjs'),code);
 }
+await fs.writeFile(path.join(out,'blog.mjs'),ts.transpileModule(await fs.readFile('data/blog.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText);
+const {mergeArticles,seedArticles}=await import(path.join(out,'blog.mjs'));
 const {handleCabinetRequest}=await import(path.join(out,'cabinet-server.mjs'));
 const {hashPassword}=await import(path.join(out,'cabinet-crypto.mjs'));
 const sqlite=new DatabaseSync(':memory:');sqlite.exec('PRAGMA foreign_keys=ON');
@@ -62,6 +64,7 @@ try{
  r=await call('a','orders/'+o.id+'/submit','POST',{version:o.version});o=r.data.order;check('Минимум 15000 принят и статус записан',()=>assert.equal(o.status,'submitted'));
  const form=new FormData();form.append('file',new File(['%PDF test fixture'],'Тестовый-макет.pdf',{type:'application/pdf'}));r=await call('a','orders/'+o.id+'/files','POST',form);const fileId=r.data.files[0].id;
  const privateFile=await call('b','files/'+fileId);const ownFile=await call('a','files/'+fileId);check('Файлы хранятся и проверяют владельца при скачивании',()=>{assert.equal(privateFile.status,404);assert.equal(ownFile.status,200);assert.match(ownFile.headers.get('content-disposition'),/attachment/);assert.equal(objects.size,1);});
+ const jsonForm=new FormData();jsonForm.append('file',new File(['{\"total\":15000}'],'StreetArt_calculation.json',{type:'application/json'}));const jsonUpload=await call('a','orders/'+o.id+'/files','POST',jsonForm);check('Полный расчёт JSON можно приложить к заказу',()=>assert.equal(jsonUpload.status,201));
  const customerStatus=await call('a','orders/'+o.id+'/status','POST',{version:o.version,status:'production',note:''});check('Клиент не управляет производственными статусами',()=>assert.equal(customerStatus.status,403));
  const tooLowQuote=await call('admin','orders/'+o.id+'/quote','POST',{version:o.version,amount:14999,note:'Тестовая смета'});check('Администратор не выставляет смету ниже минимума',()=>assert.equal(tooLowQuote.status,400));
  r=await call('admin','orders/'+o.id+'/quote','POST',{version:o.version,amount:17000,note:'Тест: печать, обработка и доставка'});o=r.data.order;check('Смета администратора попадает на согласование',()=>assert.equal(o.status,'awaiting_approval'));
@@ -84,8 +87,21 @@ try{
  check('Заказ проходит производство, отгрузку и завершение с историей',()=>{assert.equal(o.status,'completed');assert.ok(r.data.events.some(e=>e.title==='Отгружен'));assert.ok(r.data.events.some(e=>e.title==='Завершён'));});
  const list=await call('a','orders?search='+encodeURIComponent('Тестовое'));check('Поиск читает сохранённые заказы из базы',()=>assert.equal(list.data.total,1));
  const nonAdminSettings=await call('a','settings');check('Реквизиты может изменять только администратор',()=>assert.equal(nonAdminSettings.status,403));
+
+ const blogDenied=await call('a','blog/manage');check('Редактор блога закрыт для клиента',()=>assert.equal(blogDenied.status,403));
+ const article={slug:'qa-test-article',title:'Тестовая статья',excerpt:'Практическое описание для проверки публикации',category:'Практика',body:'## Заголовок\n'+('Проверяем публикацию и сохранение текста. '.repeat(10)),status:'draft',expectedUpdatedAt:0};
+ const forbiddenPublish=await call('a','blog/article','PUT',article);check('Клиент не может публиковать статьи',()=>assert.equal(forbiddenPublish.status,403));
+ let blog=await call('admin','blog/article','PUT',article);check('Администратор сохраняет черновик статьи',()=>assert.equal(blog.status,200));
+ const allArticles=()=>sqlite.prepare('SELECT slug,title,excerpt,category,body,status,published_at AS publishedAt,updated_at AS updatedAt FROM cabinet_articles').all();
+ check('Черновик отсутствует в публичном списке',()=>assert.ok(!mergeArticles(allArticles()).some(a=>a.slug===article.slug)));
+ const oldVersion=blog.data.article.updatedAt;
+ blog=await call('admin','blog/article','PUT',{...article,status:'published',expectedUpdatedAt:oldVersion});check('Публикация открывает статью и увеличивает версию',()=>{assert.equal(blog.status,200);assert.ok(blog.data.article.updatedAt>oldVersion);assert.ok(mergeArticles(allArticles()).some(a=>a.slug===article.slug));});
+ const staleBlog=await call('admin','blog/article','PUT',{...article,expectedUpdatedAt:oldVersion});check('Устаревшая версия статьи не перезаписывает новую',()=>assert.equal(staleBlog.status,409));
+ const seed=seedArticles[0];const unpublish=await call('admin','blog/article','PUT',{...seed,status:'draft',expectedUpdatedAt:seed.updatedAt});check('Снятая с публикации начальная статья скрыта',()=>{assert.equal(unpublish.status,200);assert.ok(!mergeArticles(allArticles()).some(a=>a.slug===seed.slug));});
+ const reservedArticle=await call('admin','blog/article','PUT',{...article,slug:'editor'});check('Служебный адрес редактора нельзя занять статьёй',()=>assert.equal(reservedArticle.status,400));
+ const emptyArticle=await call('admin','blog/article','PUT',{...article,slug:'empty-article',status:'published',body:''});check('Пустую статью нельзя опубликовать',()=>assert.equal(emptyArticle.status,400));
  await call('a','auth/logout','POST',{});const signedOut=await call('a','orders');check('Выход удаляет серверный сеанс',()=>assert.equal(signedOut.status,401));
  let last;for(let i=0;i<11;i++)last=await call('b','auth/login','POST',{login:'unknown@example.test',password:'wrong'});check('Повторные неудачные входы ограничиваются',()=>assert.equal(last.status,429));
  check('В базе отсутствуют пароли и сырые session-токены',()=>{assert.match(sqlite.prepare("SELECT password_hash FROM cabinet_users WHERE login='admin'").get().password_hash,/^pbkdf2-sha256/);assert.ok(!sqlite.prepare('SELECT token_hash FROM cabinet_sessions').all().some(row=>Object.values(jars).some(jar=>jar.includes(row.token_hash))));});
- await fs.mkdir('reports',{recursive:true});await fs.writeFile('reports/cabinet-tests.json',JSON.stringify({date:'2026-10-05',passed,failed:0,environment:'isolated SQLite + R2 fixture; no live payments',results},null,2)+'\n');console.log(JSON.stringify({passed,failed:0}));
-}catch(error){await fs.writeFile('reports/cabinet-tests.json',JSON.stringify({date:'2026-10-05',passed,failed:1,results,error:error.message},null,2)+'\n');throw error;}finally{sqlite.close();}
+ await fs.mkdir('reports',{recursive:true});await fs.writeFile('reports/cabinet-tests.json',JSON.stringify({date:'2026-10-06',passed,failed:0,environment:'isolated SQLite + R2 fixture; no live payments',results},null,2)+'\n');console.log(JSON.stringify({passed,failed:0}));
+}catch(error){await fs.writeFile('reports/cabinet-tests.json',JSON.stringify({date:'2026-10-06',passed,failed:1,results,error:error.message},null,2)+'\n');throw error;}finally{sqlite.close();}

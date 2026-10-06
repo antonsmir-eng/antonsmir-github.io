@@ -32,3 +32,6 @@ export const payments=sqliteTable('cabinet_payments',{
  confirmationUrl:text('confirmation_url'),reference:text('reference').notNull().default(''),createdAt:integer('created_at').notNull(),updatedAt:integer('updated_at').notNull()
 },t=>[uniqueIndex('cabinet_payments_provider_id').on(t.providerId),uniqueIndex('cabinet_payments_key').on(t.idempotencyKey),index('cabinet_payments_order').on(t.orderId,t.createdAt),uniqueIndex('cabinet_payments_active').on(t.orderId).where(sql`provider='yookassa' AND status IN ('creating','pending','waiting_for_capture')`)]);
 export const settings=sqliteTable('cabinet_settings',{key:text('key').primaryKey(),value:text('value').notNull()});
+export const articles=sqliteTable('cabinet_articles',{
+ slug:text('slug').primaryKey(),title:text('title').notNull(),excerpt:text('excerpt').notNull(),category:text('category').notNull(),body:text('body').notNull(),status:text('status',{enum:['draft','published']}).notNull().default('draft'),publishedAt:integer('published_at').notNull().default(0),updatedAt:integer('updated_at').notNull(),
+},t=>[index('cabinet_articles_status').on(t.status,t.publishedAt)]);

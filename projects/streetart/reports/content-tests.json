@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-06",
+  "articleRenderChecks": 8,
+  "literalLinksChecked": 79,
+  "knownRoutes": 155,
+  "passed": true,
+  "scope": "Source render and literal link destinations, not browser interaction"
+}

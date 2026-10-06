@@ -1,6 +1,7 @@
 import {z,ZodError} from 'zod';
 import {CompanySchema,MINIMUM_KOPECKS,PasswordSchema,RequestSchema,statuses,transitions,type CabinetOrder,type CabinetUser,type Company,type OrderStatus} from './cabinet-model';
 import {digest,hashPassword,token,verifyPassword} from './cabinet-crypto';
+import {mergeArticles,seedArticles,type BlogArticle} from '../data/blog';
 
 export type CabinetEnv={DB?:D1Database;BUCKET?:R2Bucket;ADMIN_BOOTSTRAP_HASH?:string;CABINET_ORIGIN?:string;YOOKASSA_SHOP_ID?:string;YOOKASSA_SECRET_KEY?:string;PAYMENT_MODE?:string};
 type UserRow=Omit<CabinetUser,'mustChangePassword'>&{passwordHash:string;mustChangePassword:number};
@@ -105,6 +106,16 @@ export async function handleCabinetRequest(request:Request,env:CabinetEnv):Promi
   if(actor)await synchronizePayment(db,env,payment,actor);return json({ok:true});
  }
  const user=await requireUser(request,db,path.join('/')==='password'||path.join('/')==='profile');
+ if(path.join('/')==='blog/manage'&&method==='GET'){
+  requireAdmin(user);const rows=await db.prepare('SELECT slug,title,excerpt,category,body,status,published_at AS publishedAt,updated_at AS updatedAt FROM cabinet_articles').all<BlogArticle>();return json({articles:mergeArticles(rows.results,false)});
+ }
+ if(path.join('/')==='blog/article'&&method==='PUT'){
+  requireAdmin(user);const data=z.object({slug:z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/,'Адрес — латинские буквы, цифры и дефисы').min(3).max(100).refine(x=>x!=='editor','Этот адрес занят'),title:z.string().trim().min(3).max(180),excerpt:z.string().trim().max(400),category:z.string().trim().min(2).max(60),body:z.string().trim().max(12000),status:z.enum(['draft','published']),expectedUpdatedAt:z.number().int().nonnegative()}).parse(await payload(request));
+  if(data.status==='published'&&(data.body.length<200||data.excerpt.length<20))fail(400,'Для публикации добавьте описание от 20 символов и статью от 200 символов.');
+  const row=await db.prepare('SELECT slug,title,excerpt,category,body,status,published_at AS publishedAt,updated_at AS updatedAt FROM cabinet_articles WHERE slug=?').bind(data.slug).first<BlogArticle>();const previous=row||seedArticles.find(x=>x.slug===data.slug);if((previous?.updatedAt||0)!==data.expectedUpdatedAt)fail(409,'Статья уже изменена или адрес занят. Обновите список и откройте актуальную версию.');
+  const now=Math.max(Date.now(),(previous?.updatedAt||0)+1),publishedAt=previous?.publishedAt||(data.status==='published'?now:0);const result=await db.prepare('INSERT INTO cabinet_articles (slug,title,excerpt,category,body,status,published_at,updated_at) VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(slug) DO UPDATE SET title=excluded.title,excerpt=excluded.excerpt,category=excluded.category,body=excluded.body,status=excluded.status,published_at=excluded.published_at,updated_at=excluded.updated_at WHERE cabinet_articles.updated_at=?').bind(data.slug,data.title,data.excerpt,data.category,data.body,data.status,publishedAt,now,row?.updatedAt||0).run();if(!result.meta.changes)fail(409,'Статья уже изменена. Обновите список.');
+  return json({article:{slug:data.slug,title:data.title,excerpt:data.excerpt,category:data.category,body:data.body,status:data.status,publishedAt,updatedAt:now}});
+ }
  if(path.join('/')==='password'&&method==='POST'){
   const data=z.object({currentPassword:z.string().max(128),password:PasswordSchema}).parse(await payload(request));
   await rate(db,request,'password',user.id,6,900000);if(!await verifyPassword(data.currentPassword,user.passwordHash))fail(400,'Текущий пароль неверен.');
@@ -162,7 +173,7 @@ export async function handleCabinetRequest(request:Request,env:CabinetEnv):Promi
    const data=z.object({version:z.number().int(),note:z.string().trim().min(3,'Укажите причину отмены').max(1000)}).parse(await payload(request));if(!transitions[o.status].includes('canceled'))fail(409,'Заказ уже оплачен или завершён. Обратитесь к администратору.');if(await db.prepare("SELECT id FROM cabinet_payments WHERE order_id=? AND provider='yookassa' AND status IN ('creating','pending','waiting_for_capture')").bind(o.id).first())fail(409,'Сначала проверьте незавершённый платёж ЮKassa.');await changeOrder(db,user,o,data.version,{status:'canceled'},'Заказ отменён',data.note,undefined,noActivePayment);return json(await details(db,user,o.id));
   }
   if(action==='files'&&method==='POST'){
-   if(['completed','canceled'].includes(o.status))fail(409,'Заказ закрыт.');if(!env.BUCKET)fail(503,'Хранилище временно недоступно.');if(Number(request.headers.get('content-length')||0)>11*1024*1024)fail(413,'Максимальный размер файла — 10 МБ.');const form=await request.formData(),file=form.get('file');if(!(file instanceof File)||file.size===0||file.size>10*1024*1024)fail(400,'Выберите файл до 10 МБ.');if(!/\.(pdf|cdr|ai|eps|tiff?|png|jpe?g|zip|xlsx?|csv|docx?)$/i.test(file.name))fail(400,'Допустимы макеты, изображения, таблицы, документы и ZIP.');const count=await db.prepare('SELECT COUNT(*) AS total FROM cabinet_files WHERE order_id=?').bind(o.id).first<{total:number}>();if((count?.total||0)>=20)fail(400,'К одному заказу можно добавить до 20 файлов.');
+   if(['completed','canceled'].includes(o.status))fail(409,'Заказ закрыт.');if(!env.BUCKET)fail(503,'Хранилище временно недоступно.');if(Number(request.headers.get('content-length')||0)>11*1024*1024)fail(413,'Максимальный размер файла — 10 МБ.');const form=await request.formData(),file=form.get('file');if(!(file instanceof File)||file.size===0||file.size>10*1024*1024)fail(400,'Выберите файл до 10 МБ.');if(!/\.(pdf|cdr|ai|eps|tiff?|png|jpe?g|zip|xlsx?|csv|json|docx?)$/i.test(file.name))fail(400,'Допустимы макеты, изображения, таблицы, документы и ZIP.');const count=await db.prepare('SELECT COUNT(*) AS total FROM cabinet_files WHERE order_id=?').bind(o.id).first<{total:number}>();if((count?.total||0)>=20)fail(400,'К одному заказу можно добавить до 20 файлов.');
    const id=crypto.randomUUID(),objectKey='orders/'+o.id+'/'+id,name=file.name.replace(/[\x00-\x1f/\\]/g,'_').slice(0,180),contentType='application/octet-stream';await env.BUCKET.put(objectKey,file.stream(),{httpMetadata:{contentType}});
    try{await db.batch([db.prepare('INSERT INTO cabinet_files (id,order_id,owner_id,name,size,content_type,object_key,created_at) VALUES (?,?,?,?,?,?,?,?)').bind(id,o.id,user.id,name,file.size,contentType,objectKey,Date.now()),db.prepare('INSERT INTO cabinet_order_events (id,order_id,actor_id,title,note,created_at) VALUES (?,?,?,?,?,?)').bind(crypto.randomUUID(),o.id,user.id,'Добавлен файл',name,Date.now())]);}catch(error){await env.BUCKET.delete(objectKey);throw error;}return json(await details(db,user,o.id),201);
   }
